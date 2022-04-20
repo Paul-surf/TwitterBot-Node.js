@@ -108,5 +108,3 @@ function tweetRandomImage(){
 setInterval( function(){
     tweetRandomImage();
 }, 10000 );
-
-// https://botwiki.org/resource/tutorial/random-image-tweet/

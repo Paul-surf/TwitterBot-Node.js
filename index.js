@@ -58,12 +58,22 @@ function tweetRandomImage(){
                             text: 'A beautiful man'
                         }            
                     }, function( err, data, response ){
+                        // Her bliver der skabt nogle tilfældige stykker tekst som kan blive
+                        // Tilføjet til vores reklame
+                        const textArray = [
+                            'Her får du de bedste alkoholfrie øl! #ThistedBryghus',
+                            'Mangler du en fest for de unge? Jamen så kom forbi og køb en alkoholfri øl! #ThistedBryghus',
+                            'Hvad mangler de unge? øl! derfor kan dit barn nu få alkoholfri øl hos os #ThistedBryghus',
+                            'Prøv vores klassiske thy øl! #ThistedBryghus'
+                        ];
+                        
+                        var randomText = Math.floor(Math.random()*textArray.length);
 
                         /* Til sidst skab en tweet med billedet. */
 
                         T.post( 'statuses/update', {
-                            // Her tilføjer man hvad der skal stå på tweeten
-                            status: "I'm really tired today?! #Twitterbot",
+                            // Her bliver der tilføjet tekst til tweeten
+                            status: textArray[randomText],
                             media_ids: [image.media_id_string]
                         },
                         function( err, data, response){
@@ -78,14 +88,14 @@ function tweetRandomImage(){
                                     Eller gemme det i en ny mappe
                                 */
 
-                                fs.unlink( imagePath, function( err ){
-                                  if ( err ){
-                                    console.log( 'error: unable to delete image ' + imagePath );
-                                  }
-                                  else{
-                                    console.log( 'image ' + imagePath + ' was deleted' );
-                                  }
-                                } );
+                                // fs.unlink( imagePath, function( err ){
+                                //   if ( err ){
+                                //     console.log( 'error: unable to delete image ' + imagePath );
+                                //   }
+                                //   else{
+                                //     console.log( 'image ' + imagePath + ' was deleted' );
+                                //   }
+                                // } );
                             }
                         } );
                     } );
@@ -99,3 +109,4 @@ setInterval( function(){
     tweetRandomImage();
 }, 10000 );
 
+// https://botwiki.org/resource/tutorial/random-image-tweet/

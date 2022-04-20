@@ -85,17 +85,16 @@ function tweetRandomImage(){
 
                                 /*
                                     Efter man har lavet en tweet, så kan man slette billedet som blev brugt
-                                    Eller gemme det i en ny mappe
                                 */
 
-                                // fs.unlink( imagePath, function( err ){
-                                //   if ( err ){
-                                //     console.log( 'error: unable to delete image ' + imagePath );
-                                //   }
-                                //   else{
-                                //     console.log( 'image ' + imagePath + ' was deleted' );
-                                //   }
-                                // } );
+                                fs.unlink( imagePath, function( err ){
+                                  if ( err ){
+                                    console.log( 'error: unable to delete image ' + imagePath );
+                                  }
+                                  else{
+                                    console.log( 'image ' + imagePath + ' was deleted' );
+                                  }
+                                } );
                             }
                         } );
                     } );
@@ -108,3 +107,5 @@ function tweetRandomImage(){
 setInterval( function(){
     tweetRandomImage();
 }, 10000 );
+
+// https://botwiki.org/resource/tutorial/random-image-tweet/

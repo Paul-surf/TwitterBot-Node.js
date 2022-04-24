@@ -1,22 +1,18 @@
-/*
-    A simple Twitter bot that posts random images.
-    Tutorial: https://botwiki.org/resource/tutorial/random-image-tweet/
-*/
-
+// Tilføjer moduler, config.js fil og twit biblotek til filen
 const fs = require( 'fs' ),
       path = require( 'path' ),
       Twit = require( 'twit' ),
       config = require( path.join( __dirname, 'config.js' ) );
 
+// Opretter forbindelse til vores Twitter konto
 const T = new Twit( config );
 
+/* hjælpe funktion for at vælge et tilfældigt billede fra vores images mappe */
 function randomFromArray( arr ){
-    /* hjælpe funktion for at vælge et tilfældigt element fra et array. */
-
     return arr[Math.floor( Math.random() * arr.length )];
 }
 
-function tweetRandomImage(){
+function tweetAdd(){
     /* Først, indlæs alle billederne fra images mappen. */
 
     fs.readdir( __dirname + '/images', function( err, files ){
@@ -55,7 +51,7 @@ function tweetRandomImage(){
                     T.post( 'media/metadata/create', {
                         media_id: image.media_id_string,
                         alt_text: {
-                            text: 'A beautiful man'
+                            text: 'A beautiful beer'
                         }            
                     }, function( err, data, response ){
                         // Her bliver der skabt nogle tilfældige stykker tekst som kan blive
@@ -72,8 +68,9 @@ function tweetRandomImage(){
                         /* Til sidst skab en tweet med billedet. */
 
                         T.post( 'statuses/update', {
-                            // Her bliver der tilføjet tekst til tweeten
-                            status: textArray[randomText],
+                            // Her bliver der tilføjet tekst til opslaget
+                            status: textArray[randomText] + image.source,
+                            // Vi tilføjer her billedet til opslaget
                             media_ids: [image.media_id_string]
                         },
                         function( err, data, response){
@@ -81,10 +78,10 @@ function tweetRandomImage(){
                                 console.log( 'error:', err );
                             }
                             else{
-                                console.log( 'posted an image!' );
+                                console.log( 'posted a new tweet!' );
 
                                 /*
-                                    Efter man har lavet en tweet, så kan man slette billedet som blev brugt
+                                    Efter man har lavet et opslag, så sletter robotten billedet som blev brugt
                                 */
 
                                 fs.unlink( imagePath, function( err ){
@@ -105,5 +102,5 @@ function tweetRandomImage(){
 }
 
 setInterval( function(){
-    tweetRandomImage();
+    tweetAdd();
 }, 10000 );
